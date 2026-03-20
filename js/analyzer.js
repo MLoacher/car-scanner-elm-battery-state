@@ -165,34 +165,33 @@ export function runHealthChecks(cells, temperatures, bms) {
   // Cell spread: delta < 20mV
   const cellSpreadOk = cells.delta != null && cells.delta < 0.020;
 
-  // Temperature spread: max - min < 10°C
+  // Temperature spread: max - min < 5°C
   const tempSpreadOk =
-    temperatures.count > 0 &&
-    temperatures.stats != null &&
-    temperatures.stats.delta != null &&
-    temperatures.stats.delta < 10;
+    temperatures.count === 0 ||
+    (temperatures.delta != null && temperatures.delta < 5);
 
-  // Cells in normal operating range
+  // Cells in normal operating range (3.0V–4.2V for NMC)
   const cellsInRange =
     cells.min != null &&
     cells.max != null &&
-    cells.min.value > 2.5 &&
-    cells.max.value < 4.25;
+    cells.min.value >= 3.0 &&
+    cells.max.value <= 4.2;
 
   // Voltage consistency: pack voltage vs sum of cells within 1V
   const voltageConsistent =
-    bms.packVoltage != null &&
-    bms.cellSumVoltage != null &&
+    bms.packVoltage == null || bms.cellSumVoltage == null ||
     Math.abs(bms.packVoltage - bms.cellSumVoltage) < 1.0;
 
-  // No outlier cells: all cells within 50mV of the average
-  const noOutliers =
-    cells.voltages != null &&
-    cells.avg != null &&
-    cells.voltages.every((v) => Math.abs(v - cells.avg) < 0.050);
+  // No outlier cells: > 2 standard deviations from mean
+  const voltages = (cells.voltages || []).filter(v => v !== null);
+  const mean = voltages.length > 0 ? voltages.reduce((a, b) => a + b, 0) / voltages.length : 0;
+  const stdDev = voltages.length > 0
+    ? Math.sqrt(voltages.reduce((sum, v) => sum + (v - mean) ** 2, 0) / voltages.length)
+    : 0;
+  const noOutliers = voltages.every(v => Math.abs(v - mean) <= 2 * stdDev);
 
   // SOC available
-  const socAvailable = bms.socDisplay != null && !isNaN(bms.socDisplay);
+  const socAvailable = bms.socDisplay != null || bms.socBms != null;
 
   return {
     cellSpreadOk,
