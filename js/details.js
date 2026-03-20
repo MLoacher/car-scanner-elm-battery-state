@@ -202,7 +202,7 @@ export function renderDetails(data, container) {
             <div class="stat-label">${t('avg')}</div>
           </div>
           <div class="stat-item">
-            <div class="stat-value">${fmtVal(temperatures.stats.delta * 1000 / 1000, ' \u00B0C', 1)}</div>
+            <div class="stat-value">${fmtVal(temperatures.delta, ' \u00B0C', 1)}</div>
             <div class="stat-label">${t('delta')}</div>
           </div>
         </div>

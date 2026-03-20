@@ -250,10 +250,10 @@ export function analyze(parsed, vehicleInfo, dateStr) {
   const tempData = {
     count: temperatures.length,
     values: temperatures,
-    stats: tempStats,
     min: tempStats.min,
     max: tempStats.max,
     avg: tempStats.avg,
+    delta: tempStats.delta,
   };
 
   // --- BMS data ---
