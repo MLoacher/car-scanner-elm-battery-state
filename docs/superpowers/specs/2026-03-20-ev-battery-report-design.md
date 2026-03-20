@@ -171,6 +171,7 @@ Full data breakdown with interactive charts and tables.
 **All Recorded Parameters** (collapsible)
 - Expandable table grouped by module: [8C.BMS], [19.Gate], [01.ENG], [08.HVAC], [51.ElDrive], [C6.Charger], Generic OBD
 - Each PID shows: name, last value, min, max, average, unit
+- Group any unlisted modules (e.g. `[03.ABS]`) into their own sections dynamically
 
 ## Responsive Design
 
@@ -248,8 +249,9 @@ Extensible: additional platforms (e.g. Hyundai E-GMP, Tesla) can be added later 
 
 ## CSV Parser
 
-- Semicolon-delimited, all fields quoted
+- Semicolon-delimited, all fields quoted, trailing semicolon on each row (tolerate empty 5th field)
 - Columns: SECONDS, PID, VALUE, UNITS
+- Some PIDs have platform-specific suffixes (e.g. `(Macan EV, Q6 eTron)`) — strip these for matching
 - Parser extracts the **last recorded value** for each PID (latest timestamp)
 - For cell voltages and temperatures: also computes min, max, average across all readings
 - Auto-detects cell count from number of unique `Batteriezellspannung Zelle NNN` PIDs
