@@ -138,6 +138,6 @@ export async function generatePDF(reportData) {
   }
 
   // Build filename with current date
-  const date = reportData?.meta?.date || new Date().toISOString().slice(0, 10);
+  const date = reportData?.meta?.dateStr || new Date().toISOString().slice(0, 10);
   pdf.save(`battery-report-${date}.pdf`);
 }
