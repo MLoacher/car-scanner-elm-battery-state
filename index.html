@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EV Battery Health Report</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pako@2/dist/pako.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- STATE 1: Upload -->
+    <section id="state-upload" class="state active">
+      <div class="container">
+        <h1 data-i18n="title">EV Battery Health Report</h1>
+        <p class="subtitle" data-i18n="subtitle">Upload your Car Scanner export to analyze your EV battery</p>
+        <div id="drop-zone" class="drop-zone">
+          <div class="drop-icon">&#9889;</div>
+          <p class="drop-text" data-i18n="dropPrompt">Drop your .zip or .csv file here</p>
+          <p class="drop-or" data-i18n="orText">or</p>
+          <label class="btn btn-primary" for="file-input">
+            <span data-i18n="browseFiles">Browse Files</span>
+          </label>
+          <input type="file" id="file-input" accept=".zip,.csv" hidden>
+          <p class="drop-hint" data-i18n="exportedFrom">Exported from Car Scanner ELM OBD2 app</p>
+        </div>
+        <p class="privacy-note" data-i18n="privacyNote">All processing happens locally in your browser</p>
+      </div>
+    </section>
+
+    <!-- STATE 2: Car Info Form -->
+    <section id="state-form" class="state">
+      <div class="container">
+        <h1 data-i18n="title">EV Battery Health Report</h1>
+        <div class="file-summary">
+          <strong data-i18n="fileLoaded">File loaded</strong>: <span id="file-name"></span>
+          <p id="parse-summary" class="parse-summary"></p>
+        </div>
+        <form id="car-info-form" class="car-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label data-i18n="carMake">Car Make</label>
+              <select id="car-make"><option value="">--</option></select>
+            </div>
+            <div class="form-group">
+              <label data-i18n="carModel">Model</label>
+              <select id="car-model"><option value="">--</option></select>
+            </div>
+            <div class="form-group">
+              <label data-i18n="mileage">Mileage (km)</label>
+              <input type="number" id="car-mileage" placeholder="e.g. 56483">
+            </div>
+            <div class="form-group">
+              <label data-i18n="dateOfReading">Date of Reading</label>
+              <input type="date" id="reading-date">
+            </div>
+            <div class="form-group">
+              <label data-i18n="knownSoh">Known SOH % (optional)</label>
+              <input type="number" id="known-soh" step="0.1" min="0" max="100" placeholder="e.g. 96.7">
+            </div>
+            <div class="form-group">
+              <label data-i18n="batteryCapacity">Battery Capacity</label>
+              <input type="text" id="battery-capacity" disabled>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success" data-i18n="generateReport">Generate Report</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- STATE 3: Report -->
+    <section id="state-report" class="state">
+      <div class="container">
+        <div class="tab-bar">
+          <button class="tab active" data-tab="report" data-i18n="reportTab">Report</button>
+          <button class="tab" data-tab="details" data-i18n="detailsTab">Details</button>
+        </div>
+        <div id="report-content" class="tab-content active"></div>
+        <div id="details-content" class="tab-content"></div>
+        <div class="actions">
+          <button class="btn btn-secondary" id="btn-pdf" data-i18n="printPdf">Print / PDF</button>
+          <button class="btn btn-secondary" id="btn-share" data-i18n="shareLink">Share Link</button>
+          <button class="btn btn-secondary" id="btn-new" data-i18n="newUpload">New Upload</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <footer>
+    <div class="lang-toggle">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <span>|</span>
+      <button class="lang-btn" data-lang="de">DE</button>
+    </div>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,991 @@
+/* ============================================================
+   CSS Custom Properties
+   ============================================================ */
+:root {
+  --color-bg-dark: #0f172a;
+  --color-bg-light: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-bg-vehicle: #dbeafe;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-success: #16a34a;
+  --color-success-hover: #15803d;
+  --color-secondary: #64748b;
+  --color-secondary-hover: #475569;
+  --color-text-dark: #0f172a;
+  --color-text-muted: #64748b;
+  --color-text-light: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-border-dashed: #475569;
+  --color-drag-over: #1e40af;
+  --color-drag-over-bg: #1e3a5f;
+  --color-green: #16a34a;
+  --color-red: #dc2626;
+  --color-toast-bg: #1e293b;
+  --color-toast-text: #f8fafc;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--color-text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app {
+  flex: 1;
+}
+
+/* ============================================================
+   Container
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+/* ============================================================
+   State Visibility
+   ============================================================ */
+.state {
+  display: none;
+  min-height: 100vh;
+}
+
+.state.active {
+  display: block;
+}
+
+/* Upload and Form states: dark background */
+#state-upload,
+#state-form {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+}
+
+#state-upload h1,
+#state-form h1 {
+  color: var(--color-text-light);
+}
+
+/* Report state: light background */
+#state-report {
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark);
+}
+
+/* ============================================================
+   Typography helpers
+   ============================================================ */
+.subtitle {
+  color: #94a3b8;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  background-color: var(--color-success-hover);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
+}
+
+/* ============================================================
+   Drop Zone
+   ============================================================ */
+.drop-zone {
+  border: 2px dashed var(--color-border-dashed);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.drop-zone.drag-over {
+  border-color: var(--color-drag-over);
+  background-color: var(--color-drag-over-bg);
+}
+
+.drop-icon {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.drop-text {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-light);
+}
+
+.drop-or {
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.drop-hint {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.privacy-note {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   File Summary & Parse Summary
+   ============================================================ */
+.file-summary {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: var(--radius);
+  padding: 0.875rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9375rem;
+  color: #cbd5e1;
+}
+
+.file-summary strong {
+  color: var(--color-text-light);
+}
+
+.parse-summary {
+  margin-top: 0.375rem;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+/* ============================================================
+   Car Form & Form Grid
+   ============================================================ */
+.car-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #334155;
+  border-radius: var(--radius);
+  background-color: #1e293b;
+  color: var(--color-text-light);
+  font-size: 0.9375rem;
+  width: 100%;
+  transition: border-color 0.15s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-group input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-group input::placeholder {
+  color: #475569;
+}
+
+.form-group select option {
+  background-color: #1e293b;
+  color: var(--color-text-light);
+}
+
+/* ============================================================
+   Tab Bar & Tab Content
+   ============================================================ */
+.tab-bar {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  padding: 0.625rem 1.25rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab:hover {
+  color: var(--color-primary);
+}
+
+.tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ============================================================
+   Actions Row
+   ============================================================ */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ============================================================
+   Report
+   ============================================================ */
+.report {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.report-header {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.report-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.report-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: 0.25rem;
+}
+
+.report-meta {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   Vehicle Bar
+   ============================================================ */
+.vehicle-bar {
+  background-color: var(--color-bg-vehicle);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  box-shadow: var(--shadow);
+}
+
+.vehicle-bar .label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1e40af;
+  margin-bottom: 0.125rem;
+}
+
+.vehicle-bar .value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+/* ============================================================
+   Report Section & Detail Section
+   ============================================================ */
+.report-section,
+.detail-section {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.section-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0.125rem;
+}
+
+.section-sub {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+.section-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.section-header h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+/* ============================================================
+   Score & Energy Row
+   ============================================================ */
+.score-energy-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.score-card,
+.energy-card {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.score-big {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-text-dark);
+}
+
+.score-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  align-self: flex-start;
+}
+
+.score-badge.green {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.score-badge.yellow {
+  background-color: #fef9c3;
+  color: #a16207;
+}
+
+.score-badge.orange {
+  background-color: #ffedd5;
+  color: #c2410c;
+}
+
+.score-badge.red {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+/* ============================================================
+   KV Grid
+   ============================================================ */
+.kv-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.9375rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.kv-row:last-child {
+  border-bottom: none;
+}
+
+.kv-row .key {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.kv-row .val {
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+/* ============================================================
+   Health Check Grid
+   ============================================================ */
+.health-check-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.625rem;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius);
+  background-color: #f8fafc;
+  border: 1px solid var(--color-border);
+  font-size: 0.9375rem;
+}
+
+.check-item .check-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.check-item .check-label {
+  flex: 1;
+  color: var(--color-text-dark);
+}
+
+.check-item .check-value {
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* ============================================================
+   Stats Row
+   ============================================================ */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.stat-item {
+  background-color: var(--color-bg-card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   Assessment & Disclaimer
+   ============================================================ */
+.assessment {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-text-dark);
+}
+
+.disclaimer {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   Cell Grid (Battery Cells)
+   Mobile: repeat(5, 1fr) — Desktop: repeat(20, 1fr)
+   ============================================================ */
+.cell-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+}
+
+.cell-tile {
+  aspect-ratio: 1 / 1.2;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: default;
+  position: relative;
+  min-width: 0;
+}
+
+.cell-tile:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ============================================================
+   Temp Grid
+   Mobile: 4 columns — Desktop: 6 columns
+   ============================================================ */
+.temp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.temp-tile {
+  border-radius: var(--radius);
+  padding: 0.5rem 0.375rem;
+  text-align: center;
+  font-size: 0.8125rem;
+}
+
+.temp-tile .temp-label {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.125rem;
+}
+
+.temp-tile .temp-value {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ============================================================
+   Legend
+   ============================================================ */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   Utility Color Classes
+   ============================================================ */
+.text-green {
+  color: var(--color-green);
+}
+
+.text-red {
+  color: var(--color-red);
+}
+
+/* ============================================================
+   PID Group & Table
+   ============================================================ */
+.pid-group {
+  margin-bottom: 1.5rem;
+}
+
+.pid-group:last-child {
+  margin-bottom: 0;
+}
+
+.pid-group h3 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: 0.625rem;
+  padding-bottom: 0.375rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+}
+
+.pid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.pid-table th {
+  background-color: #f1f5f9;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.pid-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-dark);
+  vertical-align: middle;
+}
+
+.pid-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pid-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* ============================================================
+   Toast
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-toast-bg);
+  color: var(--color-toast-text);
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  white-space: nowrap;
+  transition: opacity 0.25s ease;
+}
+
+.toast.hidden {
+  display: none;
+}
+
+/* ============================================================
+   Footer & Language Toggle
+   ============================================================ */
+footer {
+  background-color: var(--color-bg-dark);
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.lang-toggle span {
+  color: #334155;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0.375rem;
+  border-radius: var(--radius);
+  transition: color 0.15s ease;
+}
+
+.lang-btn:hover,
+.lang-btn.active {
+  color: var(--color-text-light);
+}
+
+/* ============================================================
+   Desktop Breakpoint (>= 768px)
+   ============================================================ */
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  /* Form grid: 2 columns */
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* Vehicle bar: 4 columns */
+  .vehicle-bar {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Stats row: 4 columns */
+  .stats-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Health check grid: 2 columns */
+  .health-check-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Score-energy row: 2 columns */
+  .score-energy-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Cell grid: 20 columns on desktop */
+  .cell-grid {
+    grid-template-columns: repeat(20, 1fr);
+  }
+
+  /* Temp grid: 6 columns on desktop */
+  .temp-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .drop-zone {
+    padding: 3rem 2.5rem;
+  }
+
+  .score-big {
+    font-size: 4.5rem;
+  }
+}
+
+/* ============================================================
+   Print Styles
+   ============================================================ */
+@media print {
+  /* Hide upload and form states, actions, tabs */
+  #state-upload,
+  #state-form,
+  .actions,
+  .tab-bar,
+  footer {
+    display: none !important;
+  }
+
+  /* Show report state regardless of .active class */
+  #state-report {
+    display: block !important;
+    background: #fff !important;
+    min-height: auto !important;
+  }
+
+  /* Ensure report content is visible */
+  #report-content {
+    display: block !important;
+  }
+
+  /* Details hidden in print */
+  #details-content {
+    display: none !important;
+  }
+
+  /* Reset shadows and backgrounds for print */
+  .report-section,
+  .detail-section,
+  .report-header,
+  .score-card,
+  .energy-card,
+  .vehicle-bar,
+  .stat-item {
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+    break-inside: avoid;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+
+  body {
+    font-size: 11pt;
+    color: #000;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Avoid page breaks inside key sections */
+  .vehicle-bar,
+  .score-energy-row,
+  .health-check-grid,
+  .stats-row,
+  .cell-grid {
+    break-inside: avoid;
+  }
+
+  /* Toast never prints */
+  .toast {
+    display: none !important;
+  }
+
+  /* Cell grid: keep 10 columns for print readability */
+  .cell-grid {
+    grid-template-columns: repeat(10, 1fr) !important;
+  }
+}
