@@ -19,7 +19,7 @@ const translations = {
     foundCells: 'Found {count} battery cells',
     carMake: 'Car Make',
     carModel: 'Car Model',
-    mileage: 'Mileage',
+    mileage: 'Mileage (km)',
     dateOfReading: 'Date of Reading',
     knownSoh: 'Known SoH (%)',
     batteryCapacity: 'Battery Capacity (kWh)',
